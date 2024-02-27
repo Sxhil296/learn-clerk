@@ -1,15 +1,9 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { useState } from "react";
-// import { Link } from "react-router-dom";
-// import Button from "./Button";
-// import menuIcon from "../assets/menu.svg";
-// import closeIcon from "../assets/close.svg";
-// import componentsData from "../data/componentsData.tsx";
-// import { generateMenuList } from "./LeftSidebar";
-// import githubIcon from "../assets/github.svg";
-import  { GitHub, Menu, X } from 'react-feather'
-import { UserButton } from "@clerk/nextjs";
+import { GitHub, Menu, X } from "react-feather";
+import Button from "./Button";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   const [showSideMenu, setShowSideMenu] = useState(false);
@@ -21,27 +15,29 @@ const Header = () => {
     <header className="bg-white h-20 w-full fixed top-0 z-40">
       <div className="w-full h-full m-auto flex justify-between items-center px-5 md:px-24">
         <Link href="/" className="text-2xl font-bold">
-          TO-DO.
+          Next_Clerk.
         </Link>
+
         <nav className="hidden md:block w-1/2">
           <ul className="flex justify-end items-center space-x-4">
-            <li className="inline-block hover:underline hover:underline-offset-8">
-              <Link href="/about">About</Link>
-            </li>
             <li className="inline-block p-2 cursor-pointer">
-              <a
-                href="https://github.com/marieooq/neo-brutalism-ui-library"
-                target="_blank"
-              >
-          
-                <GitHub className="w-6 h-6" />
-              </a>
+              <UserButton afterSignOutUrl="/"/>
             </li>
-            <li>
-              
-                {/* <Button buttonText="Get Started" /> */}
-                <UserButton />
-              
+
+            <li className="flex gap-2">
+              <SignedOut>
+                <Link href="/sign-in">
+                  <Button buttonLabel="SignIn" />
+                </Link>
+                <Link href="/sign-up">
+                  <Button buttonLabel="SignUp" />
+                </Link>
+              </SignedOut>
+              <SignedIn>
+                <Link href="/profile">
+                  <Button buttonLabel="Profile" />
+                </Link>
+              </SignedIn>
             </li>
           </ul>
         </nav>
@@ -51,7 +47,6 @@ const Header = () => {
             setShowSideMenu(true);
           }}
         >
-          {/* <img src={menuIcon} alt="menu" className="w-6 h-6" /> */}
           <Menu className="w-6 h-6" />
         </button>
       </div>
@@ -72,11 +67,10 @@ const Header = () => {
               className="mr-auto text-2xl font-bold leading-none"
               onClick={closeSideMenu}
             >
-              TO-DO.
+             Next_Clerk.
             </Link>
             <div>
               <button className="navbar-close" onClick={closeSideMenu}>
-                {/* <img src={closeIcon} alt="close" className="w-6 h-6" /> */}
                 <X className="w-6 h-6" />
               </button>
             </div>
@@ -84,28 +78,28 @@ const Header = () => {
           <div className="p-5">
             <ul className="flex flex-col">
               <div className="pb-8">
-                <span className="text-lg font-bold block mb-4">
-                  Getting started
-                </span>
                 <li
-                  className="inline-block hover:underline hover:underline-offset-8 mb-4"
+                  className="flex flex-col gap-4 hover:underline hover:underline-offset-8 mb-4"
                   onClick={closeSideMenu}
                 >
-                  <Link href={"/overview"}>Overview</Link>
+                  <SignedOut>
+                    <Link href={"/sign-in"}>Sign In</Link>
+                    <Link href={"/sign-up"}>Sign Up</Link>
+                  </SignedOut>
+                  <SignedIn>
+                    <Link href='/profile'>Profile</Link>
+                    <UserButton />
+                  </SignedIn>
                 </li>
               </div>
-              <div className="pb-12">
-                <span className="text-lg font-bold block mb-4">Components</span>
-                {/* {generateMenuList(componentsData, "mobile", closeSideMenu)} */}
-              </div>
+
               <div className="pb-4">
                 <li className="inline-block cursor-pointer">
                   <a
-                    href="https://github.com/marieooq/neo-brutalism-ui-library"
+                    href="https://github.com/Sxhil296/learn-clerk"
                     target="_blank"
                   >
-                    {/* <img src={githubIcon} alt="github" className="w-6 h-6" /> */}
-                    <GitHub  className="w-6 h-6" />
+                    <GitHub className="w-6 h-6" />
                   </a>
                 </li>
               </div>
